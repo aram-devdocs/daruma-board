@@ -15,7 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@daruma-board/web/design-system": ["libs/web/design-system/src/index.ts"]
+      "@daruma-board/web/design-system": [
+        "libs/web/design-system/src/index.ts"
+      ],
+      "@daruma/web/feature-board": ["libs/web/feature-board/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -3,6 +3,7 @@
   "version": 2,
   "projects": {
     "app": "apps/app",
-    "web-design-system": "libs/web/design-system"
+    "web-design-system": "libs/web/design-system",
+    "web-feature-board": "libs/web/feature-board"
   }
 }

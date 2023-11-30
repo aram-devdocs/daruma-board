@@ -1,6 +1,6 @@
 import { Box } from '@daruma-board/web/design-system';
 
-export function Index() {
+export const Board = () => {
   return (
     <Box
       sx={{
@@ -11,6 +11,4 @@ export function Index() {
       }}
     ></Box>
   );
-}
-
-export default Index;
+};
