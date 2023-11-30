@@ -5,8 +5,7 @@ export const PageLayout = ({ children }: { children: any }) => {
     Box,
     {
       sx: {
-        backgroundColor: 'primary.main',
-        color: 'primary.contrastText',
+        backgroundColor: 'primary.background.default',
         height: '100vh',
         width: '100vw',
         // center content

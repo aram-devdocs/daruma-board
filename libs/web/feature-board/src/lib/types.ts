@@ -1,6 +1,6 @@
 // TODO- move to shared/types
 
-enum DarumaColor {
+export enum DarumaColor {
   RED = 'red',
   BLUE = 'blue',
   GREEN = 'green',
@@ -13,7 +13,7 @@ enum DarumaColor {
   WHITE = 'white',
 }
 
-enum DarumaDescription {
+export enum DarumaDescription {
   RED = 'Family Safety, Overall life improvement',
   BLUE = 'Achievment of independence, self-reliance',
   GREEN = 'Good Health, Victory in sports',
@@ -26,12 +26,12 @@ enum DarumaDescription {
   WHITE = 'Scholoastic advancement',
 }
 
-interface Daruma {
+export interface Daruma {
   color: DarumaColor;
   description: DarumaDescription;
 }
 
-const darumas = {
+export const darumas = {
   [DarumaColor.RED]: {
     color: DarumaColor.RED,
     description: DarumaDescription.RED,
