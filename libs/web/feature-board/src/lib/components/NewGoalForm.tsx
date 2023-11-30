@@ -7,6 +7,7 @@ import {
   Select,
   MenuItem,
   IconButton,
+  validateEmail,
 } from '@daruma-board/web/design-system';
 import { ArrowBack } from '@mui/icons-material';
 import { darumas, Daruma } from '../types';
@@ -28,6 +29,7 @@ export const NewGoalForm = () => {
   const [dueDate, setDueDate] = useState<Date>(new Date());
   const [notes, setNotes] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const [validated, setValidated] = useState<boolean>(false);
 
   const handleChangeDaruma = (color: string) => {
     const selectedDaruma = darumasArray.find(
@@ -39,6 +41,7 @@ export const NewGoalForm = () => {
   };
   const handleSubmit = async () => {
     setLoading(true);
+    setValidated(true);
 
     // Validate
     if (!goal) {
@@ -49,6 +52,12 @@ export const NewGoalForm = () => {
 
     if (!email) {
       alert('Email is required');
+      setLoading(false);
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      alert('Email is invalid');
       setLoading(false);
       return;
     }
@@ -144,6 +153,7 @@ export const NewGoalForm = () => {
         }}
         value={goal}
         sx={textFieldSx}
+        error={validated && !goal}
       />
 
       <InputLabel>Email</InputLabel>
@@ -154,6 +164,7 @@ export const NewGoalForm = () => {
         sx={textFieldSx}
         value={email}
         type="email"
+        error={validated && !validateEmail(email)}
       />
 
       <InputLabel>Due Date</InputLabel>
