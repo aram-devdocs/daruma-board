@@ -57,6 +57,8 @@ export const SendGoal = async (req: NextApiRequest, res: NextApiResponse) => {
       return;
     }
 
+    // send email
+
     const data = await resend.emails.send({
       from: 'DarumaBoard <onboarding@resend.dev>',
       to: [email],
