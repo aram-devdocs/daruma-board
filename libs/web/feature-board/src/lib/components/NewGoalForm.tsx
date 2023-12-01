@@ -91,17 +91,6 @@ export const NewGoalForm = () => {
     }
     // TODO - Remove local storage
 
-    const existingGoals = await localStorage.getItem('goals');
-    const goals = existingGoals ? JSON.parse(existingGoals) : [];
-    const newGoal = {
-      daruma,
-      goal,
-      email,
-      dueDate,
-      notes,
-    };
-    goals.push(newGoal);
-    await localStorage.setItem('goals', JSON.stringify(goals));
     setLoading(false);
 
     router.push('/board');

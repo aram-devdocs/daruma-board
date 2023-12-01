@@ -47,8 +47,7 @@ export const LoginBox = ({
         error={validated && !validateEmail(email)}
         value={email}
         onChange={(e) => {
-          setValidated(true);
-          setEmail(e.target.value);
+          setEmail(e.target.value.toLowerCase());
         }}
       />
       {auth && (
@@ -65,7 +64,12 @@ export const LoginBox = ({
         sx={{ width: '100%', marginTop: '1rem' }}
         variant="contained"
         onClick={
-          !auth ? () => handleLogin(email) : () => validateToken(code, email)
+          !auth
+            ? () => {
+                setValidated(true);
+                handleLogin(email);
+              }
+            : () => validateToken(code, email)
         }
       >
         {loading ? 'Loading...' : !auth ? 'Login' : 'Validate'}

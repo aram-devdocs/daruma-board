@@ -44,7 +44,7 @@ export const SendGoal = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     const body = JSON.parse(req.body);
-    const email = body.email.toLowercase();
+    const email = body.email;
     const goal = body.goal;
     const dueDate = body.dueDate;
     const notes = body.notes;
