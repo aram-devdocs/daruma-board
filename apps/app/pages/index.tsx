@@ -6,8 +6,6 @@ import {
 } from '@daruma-board/web/design-system';
 import { useRouter } from 'next/router';
 
-// how to navigate in Next.js?
-// https://nextjs.org/docs/routing/introduction
 export function Index() {
   const router = useRouter();
   const buttonSx = {
@@ -21,6 +19,10 @@ export function Index() {
 
   const onBoardClick = () => {
     router.push('/board');
+  };
+
+  const onLoginClick = () => {
+    router.push('/login');
   };
 
   return (
@@ -41,6 +43,9 @@ export function Index() {
         <Typography color="primary" variant="h1">
           Daruma Board
         </Typography>
+        <Button sx={buttonSx} onClick={onLoginClick} variant="contained">
+          Login (In Progress)
+        </Button>
         <Button sx={buttonSx} onClick={onNewGoalClick} variant="contained">
           New Goal
         </Button>

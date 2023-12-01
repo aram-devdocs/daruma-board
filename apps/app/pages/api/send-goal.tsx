@@ -62,7 +62,7 @@ export const SendGoal = async (req: NextApiRequest, res: NextApiResponse) => {
     const data = await resend.emails.send({
       from: 'DarumaBoard <onboarding@resend.dev>',
       to: [email],
-      subject: 'Hello world',
+      subject: 'New Goal Created!',
       react: EmailTemplate({ email, goal, notes, dueDate, darumaDescription }),
     });
 
