@@ -35,6 +35,7 @@ export const LoginPage = () => {
         const body = await res.json();
         if (res.status === 200) {
           localStorage.setItem('token', body.token);
+          localStorage.setItem('localEmail', email);
 
           router.push('/');
         } else {

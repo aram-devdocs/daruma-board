@@ -13,6 +13,8 @@ CREATE TABLE "goal" (
   "due_date" timestamp,
   "description" varchar,
   "notes" varchar
+  "is_public" boolean  
+  "daruma" varchar
 );
 
 CREATE TABLE "auth_token" (

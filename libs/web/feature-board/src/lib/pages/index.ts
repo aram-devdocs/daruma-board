@@ -1,2 +1,3 @@
 export * from './NewGoal'
-export * from './BoardPage'
+export * from './PublicBoardPage'
+export * from './PrivateBoardPage'

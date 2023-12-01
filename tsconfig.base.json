@@ -19,7 +19,10 @@
         "libs/web/design-system/src/index.ts"
       ],
       "@daruma/web/feature-auth": ["libs/web/feature-auth/src/index.ts"],
-      "@daruma/web/feature-board": ["libs/web/feature-board/src/index.ts"]
+      "@daruma/web/feature-board": ["libs/web/feature-board/src/index.ts"],
+      "@daruma/web/feature-dashboard": [
+        "libs/web/feature-dashboard/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

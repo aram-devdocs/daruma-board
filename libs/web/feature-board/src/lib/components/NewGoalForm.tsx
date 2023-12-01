@@ -16,16 +16,17 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 export const NewGoalForm = () => {
+  // TODO: move to hook
   const router = useRouter();
   const textFieldSx = {
     width: '100%',
     marginTop: '1rem',
   };
   const darumasArray = Object.values(darumas);
-
+  const localEmail = localStorage.getItem('localEmail') || '';
   const [daruma, setDaruma] = useState<Daruma>(darumasArray[0]);
   const [goal, setGoal] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
+  const [email, setEmail] = useState<string>(localEmail);
   const [dueDate, setDueDate] = useState<Date>(new Date());
   const [notes, setNotes] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -68,11 +69,11 @@ export const NewGoalForm = () => {
       return;
     }
 
-    // TODO - submit to API
-    const response = await fetch('/api/send-goal', {
+    const response = await fetch('/api/goals-create', {
       method: 'POST',
       body: JSON.stringify({
         daruma: daruma.description,
+        color: daruma.color,
         goal,
         email,
         dueDate,
@@ -113,7 +114,7 @@ export const NewGoalForm = () => {
         color: 'primary.contrastText',
         height: '70vh',
         width: '90vw',
-        
+
         padding: '1rem',
         display: 'flex',
         alignItems: 'center',
@@ -165,6 +166,7 @@ export const NewGoalForm = () => {
         sx={textFieldSx}
         value={email}
         type="email"
+        disabled={!!localEmail}
         error={validated && !validateEmail(email)}
       />
 

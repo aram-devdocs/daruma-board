@@ -1,3 +1,3 @@
-import { BoardPage } from '@daruma/web/feature-board';
+import { PublicBoardPage } from '@daruma/web/feature-board';
 
-export default BoardPage;
+export default PublicBoardPage;
