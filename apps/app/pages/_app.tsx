@@ -15,6 +15,9 @@ import {
   lightThemeOptions,
 } from '@daruma-board/web/design-system';
 import './styles.css';
+import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
+
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
@@ -25,6 +28,47 @@ const lightTheme = createTheme(lightThemeOptions);
 
 const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const [loading, setLoading] = useState<boolean>(true); // [loading, setLoading
+
+  const router = useRouter();
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    const validateToken = async (token: string) => {
+      setLoading(true);
+      await fetch('/api/me', {
+        method: 'POST',
+        body: JSON.stringify({ token }),
+      })
+        .then((res) => {
+          console.log(res);
+          if (res.status === 200) {
+            setLoading(false);
+          } else {
+            router.push('/login');
+            setLoading(false);
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    };
+
+    const routeToLogin = async () => {
+      await router.push('/login');
+      setLoading(false);
+    };
+
+    if (token) {
+      validateToken(token);
+    } else {
+      routeToLogin();
+    }
+  }, []);
+
+  if (loading) {
+    return <></>;
+  }
 
   return (
     <CacheProvider value={emotionCache}>

@@ -37,7 +37,7 @@ export const Board = () => {
       sx={{
         backgroundColor: 'white', // TODO: theme
         height: '50vh',
-        width: '50vw',
+        width: '90vw',
         overflow: 'scroll',
       }}
     >

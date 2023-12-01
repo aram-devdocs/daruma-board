@@ -112,7 +112,8 @@ export const NewGoalForm = () => {
         backgroundColor: 'white', // TODO - replace with theme
         color: 'primary.contrastText',
         height: '70vh',
-        width: '50vw',
+        width: '90vw',
+        
         padding: '1rem',
         display: 'flex',
         alignItems: 'center',

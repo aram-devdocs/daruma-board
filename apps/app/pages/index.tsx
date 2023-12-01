@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 
 export function Index() {
   const router = useRouter();
+
   const buttonSx = {
     width: '100%',
     marginTop: '1rem',
@@ -21,7 +22,8 @@ export function Index() {
     router.push('/board');
   };
 
-  const onLoginClick = () => {
+  const onLogout = () => {
+    localStorage.removeItem('token');
     router.push('/login');
   };
 
@@ -43,8 +45,8 @@ export function Index() {
         <Typography color="primary" variant="h1">
           Daruma Board
         </Typography>
-        <Button sx={buttonSx} onClick={onLoginClick} variant="contained">
-          Login (In Progress)
+        <Button sx={buttonSx} onClick={onLogout} variant="contained">
+          Logout
         </Button>
         <Button sx={buttonSx} onClick={onNewGoalClick} variant="contained">
           New Goal

@@ -1,5 +1,6 @@
 import { sql } from '@vercel/postgres';
 import { v4 as uuidv4 } from 'uuid';
+import jwt from 'jsonwebtoken';
 // TODO: Move to service
 
 export default async function validateAuthToken(req, res) {
@@ -11,11 +12,8 @@ export default async function validateAuthToken(req, res) {
 
   try {
     const { token, email } = JSON.parse(req.body);
-    console.log('token', token);
-    console.log('email', email);
 
     if (!token || !email) {
-      console.log('no email');
       res.status(400).json({ error: 'Missing required fields' });
       return;
     }
@@ -24,16 +22,13 @@ export default async function validateAuthToken(req, res) {
       await sql`SELECT * FROM auth_token WHERE token = ${token} AND email = ${email}`;
 
     if (!tokenResponse.rowCount) {
-      console.log('no token');
       res.status(400).json({ error: 'Invalid token' });
       return;
     }
 
     const tokenData = tokenResponse.rows[0];
 
-    console.log('tokenData', tokenData);
     if (new Date(tokenData.expiration) < new Date()) {
-      console.log('expired');
       res.status(400).json({ error: 'Token expired' });
       return;
     }
@@ -48,8 +43,12 @@ export default async function validateAuthToken(req, res) {
     }
 
     // TODO: Return JWT to set client side authentication
+    const secret = process.env.JWT_SECRET;
+    const jwtToken = jwt.sign({ email }, secret, { expiresIn: '1h' });
+    res.setHeader('Set-Cookie', `token=${jwtToken}; path=/; httpOnly`);
+    console.log("jwt", jwtToken);
 
-    res.status(200).json({ message: 'ok' });
+    res.status(200).json({ message: 'ok', token: jwtToken });
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: error.message });
