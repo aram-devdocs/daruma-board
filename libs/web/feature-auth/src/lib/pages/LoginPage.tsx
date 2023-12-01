@@ -29,8 +29,16 @@ export const LoginPage = () => {
       body: JSON.stringify({ email }),
     })
       .then((res) => {
-        console.log(res);
-        setAuth(true);
+        if (res.status === 200) {
+          console.log(res);
+          setAuth(true);
+        } else {
+          if (res.status === 403) {
+            alert('Request for dev mode denied, use testing address');
+          } else {
+            alert('Email not sent: ' + res.status + ' ' + res.statusText);
+          }
+        }
       })
       .catch((error) => {
         console.error('Error:', error);

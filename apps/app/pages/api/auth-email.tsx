@@ -50,7 +50,13 @@ export default async function sendAuthCode(req, res) {
       ),
     });
 
-    console.log(data);
+    console.log('data', data);
+
+    if (!data.data) {
+      console.log('no data');
+      res.status(403).json({ error: 'Something went wrong' });
+      return;
+    }
 
     res.status(200).json({ message: 'ok' });
   } catch (error) {
