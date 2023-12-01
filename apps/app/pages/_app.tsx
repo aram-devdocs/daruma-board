@@ -47,6 +47,8 @@ const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
           } else {
             router.push('/login');
             setLoading(false);
+            localStorage.removeItem('token');
+            localStorage.removeItem('localEmail');
           }
         })
         .catch((error) => {
@@ -56,6 +58,8 @@ const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
 
     const routeToLogin = async () => {
       await router.push('/login');
+      localStorage.removeItem('token');
+      localStorage.removeItem('localEmail');
       setLoading(false);
     };
 

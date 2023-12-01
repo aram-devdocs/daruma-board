@@ -17,6 +17,7 @@ export function DashboardPage() {
 
   const onLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('localEmail');
     router.push('/login');
   };
 
