@@ -1,4 +1,4 @@
-import { PageLayout } from '@daruma-board/web/design-system';
+import { PageLayout, validateEmail } from '@daruma-board/web/design-system';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { LoginBox } from '../components';
@@ -10,6 +10,20 @@ export const LoginPage = () => {
   const router = useRouter();
   const handleLogin = async (email: string) => {
     setLoading(true);
+
+    // Validate
+    if (!email) {
+      alert('Email is required');
+      setLoading(false);
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      alert('Email is invalid');
+      setLoading(false);
+      return;
+    }
+
     await fetch('/api/auth-email', {
       method: 'POST',
       body: JSON.stringify({ email }),

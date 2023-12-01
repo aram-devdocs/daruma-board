@@ -1,5 +1,11 @@
-import { TextField, Box, Button } from '@daruma-board/web/design-system';
+import {
+  TextField,
+  Box,
+  Button,
+  validateEmail,
+} from '@daruma-board/web/design-system';
 
+import { useState } from 'react';
 interface LoginBoxProps {
   email: string;
   setEmail: (email: string) => void;
@@ -21,6 +27,7 @@ export const LoginBox = ({
   validateToken,
   loading,
 }: LoginBoxProps) => {
+  const [validated, setValidated] = useState<boolean>(false); // [validated, setValidated
   return (
     <Box
       sx={{
@@ -35,8 +42,14 @@ export const LoginBox = ({
         sx={{ width: '100%', marginTop: '1rem' }}
         label="Email"
         variant="outlined"
+        type="email"
+        disabled={auth}
+        error={validated && !validateEmail(email)}
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={(e) => {
+          setValidated(true);
+          setEmail(e.target.value);
+        }}
       />
       {auth && (
         <TextField
