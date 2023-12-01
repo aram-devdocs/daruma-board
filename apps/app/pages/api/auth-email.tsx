@@ -1,4 +1,6 @@
 import { sql } from '@vercel/postgres';
+import { getEmailApi } from '../../utility';
+
 import { Resend } from 'resend';
 // TODO: Move to service
 
@@ -35,7 +37,7 @@ export default async function sendAuthCode(req, res) {
 
     // send email
 
-    const resend = new Resend(process.env.RESEND_API_KEY);
+    const resend = new Resend(getEmailApi(email));
 
     const data = await resend.emails.send({
       from: 'DarumaBoard <onboarding@resend.dev>',

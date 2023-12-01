@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { Resend } from 'resend';
 import { sql } from '@vercel/postgres';
 import { v4 as uuidv4 } from 'uuid';
+import { getEmailApi } from '../../utility';
 
 import * as React from 'react';
 
@@ -33,8 +34,6 @@ export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
   </div>
 );
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export const SendGoal = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     // if not post, return 405
@@ -51,6 +50,8 @@ export const SendGoal = async (req: NextApiRequest, res: NextApiResponse) => {
     const darumaDescription = body.daruma;
     const darumaColor = body.color;
     const isPublic = body?.isPublic || true;
+
+    const resend = new Resend(getEmailApi(email));
 
     // if any of the required fields are missing, return 400
     if (!email || !goal || !dueDate || !darumaDescription) {

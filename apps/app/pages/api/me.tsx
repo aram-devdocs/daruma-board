@@ -10,6 +10,7 @@ export const me = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
+
   const { token } = JSON.parse(req.body);
   if (!token) {
     console.log('Token is required');
