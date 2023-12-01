@@ -11,7 +11,8 @@ export default async function validateAuthToken(req, res) {
   }
 
   try {
-    const { token, email } = JSON.parse(req.body);
+    const { token, email: rawEmail } = JSON.parse(req.body);
+    const email = rawEmail.toLowerCase();
 
     if (!token || !email) {
       res.status(400).json({ error: 'Missing required fields' });
@@ -46,7 +47,7 @@ export default async function validateAuthToken(req, res) {
     const secret = process.env.JWT_SECRET;
     const jwtToken = jwt.sign({ email }, secret, { expiresIn: '1h' });
     res.setHeader('Set-Cookie', `token=${jwtToken}; path=/; httpOnly`);
-    console.log("jwt", jwtToken);
+    console.log('jwt', jwtToken);
 
     res.status(200).json({ message: 'ok', token: jwtToken });
   } catch (error) {

@@ -12,7 +12,8 @@ export default async function sendAuthCode(req, res) {
   try {
     console.log('start');
     console.log(req.body);
-    const { email } = JSON.parse(req.body);
+    const { email: rawEmail } = JSON.parse(req.body);
+    const email = rawEmail.toLowerCase();
 
     if (!email) {
       console.log('no email');
