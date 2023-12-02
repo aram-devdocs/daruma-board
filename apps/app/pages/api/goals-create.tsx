@@ -72,8 +72,7 @@ export const SendGoal = async (req: NextApiRequest, res: NextApiResponse) => {
     const userId = userIdRows.rows[0].user_id;
 
     const goalResponse =
-      // await sql`INSERT INTO goal (goal_id, user_id, created_at, archived, due_date, description, notes, is_public) VALUES (${goalUUID}, ${userId}, ${new Date().toISOString()}, false, ${dueDate}, ${goal}, ${notes}, ${isPublic}) RETURNING *`; // ERROR 'db error: ERROR: column "archived" is of type time… You will need to rewrite or cast the expression.
-      await sql`INSERT INTO goal (goal_id, user_id, created_at, due_date, description, notes, is_public, daruma) VALUES (${goalUUID}, ${userId}, ${new Date().toISOString()}, ${dueDate}, ${goal}, ${notes}, ${isPublic}, ${darumaColor}) RETURNING *`;
+      await sql`INSERT INTO goal (goal_id, user_id, created_at, due_date, description, notes, is_public, daruma) VALUES (${goalUUID}, ${userId}, ${new Date().toISOString()}, ${dueDate}, ${goal}, ${notes}, ${isPublic}, ${darumaColor}) RETURNING *`;ç
 
     // send email
 

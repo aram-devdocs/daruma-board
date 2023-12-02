@@ -18,6 +18,7 @@
       "@daruma-board/web/design-system": [
         "libs/web/design-system/src/index.ts"
       ],
+      "@daruma/shared/data-access": ["libs/shared/data-access/src/index.ts"],
       "@daruma/web/feature-auth": ["libs/web/feature-auth/src/index.ts"],
       "@daruma/web/feature-board": ["libs/web/feature-board/src/index.ts"],
       "@daruma/web/feature-dashboard": [
