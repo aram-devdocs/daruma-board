@@ -8,8 +8,8 @@ import {
   MenuItem,
   IconButton,
   validateEmail,
+  ArrowBack,
 } from '@daruma-board/web/design-system';
-import { ArrowBack } from '@mui/icons-material';
 import { darumas, Daruma } from '../types';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
@@ -82,14 +82,11 @@ export const NewGoalForm = () => {
     });
     const data = await response.json();
 
-    console.log(data);
-
     if (data.error) {
       alert('Error sending goal');
       setLoading(false);
       return;
     }
-    // TODO - Remove local storage
 
     setLoading(false);
 

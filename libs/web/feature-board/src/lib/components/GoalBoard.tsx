@@ -1,13 +1,16 @@
-import { Box, Typography, IconButton } from '@daruma-board/web/design-system';
+import {
+  Box,
+  Typography,
+  IconButton,
+  ArrowBack,
+} from '@daruma-board/web/design-system';
 import { GoalBoardCard } from './GoalBoardCard';
-import { useState, useEffect, Fragment } from 'react';
+import { Fragment } from 'react';
 import { Daruma } from '../types';
-import { ArrowBack } from '@mui/icons-material';
-import { useRouter } from 'next/router';
+import { useGoalBoard } from '../hooks';
 
 export interface BoardCardProps {
   user_id: string;
-
   goal: string;
   notes?: string;
   due_date: string;
@@ -21,32 +24,7 @@ export interface GoalBoardProps {
 }
 
 export const GoalBoard = ({ variant }: GoalBoardProps) => {
-  // TODO: move to hook
-  const router = useRouter();
-  const [goals, setGoals] = useState<BoardCardProps[]>([]);
-  const [loadingMessage, setLoadingMessage] = useState<string>('Loading...');
-
-  useEffect(() => {
-    const fetchGoals = async () => {
-      const response = await fetch(`/api/goals-${variant}`, {
-        method: 'POST',
-        body: JSON.stringify({
-          token: localStorage.getItem('token'),
-        }),
-      });
-      const goals = await response.json();
-
-      if (!goals.length) {
-        setLoadingMessage('No goals yet');
-      } else {
-        console.log(goals);
-        setGoals(goals);
-      }
-    };
-
-    fetchGoals();
-  }, []);
-
+  const { goals, loadingMessage, navigateToIndex } = useGoalBoard({ variant });
   return (
     <Box
       sx={{
@@ -61,9 +39,7 @@ export const GoalBoard = ({ variant }: GoalBoardProps) => {
           sx={{
             alignSelf: 'flex-start',
           }}
-          onClick={() => {
-            router.push('/');
-          }}
+          onClick={navigateToIndex}
         >
           <ArrowBack />
         </IconButton>
