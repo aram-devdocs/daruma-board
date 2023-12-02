@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { BoardCardProps, GoalBoardProps } from '../components';
 
@@ -7,7 +7,6 @@ interface UseGoalBoardProps {
 }
 
 export const useGoalBoard = ({ variant }: UseGoalBoardProps) => {
-  // TODO: move to hook
   const router = useRouter();
   const [goals, setGoals] = useState<BoardCardProps[]>([]);
   const [loadingMessage, setLoadingMessage] = useState<string>('Loading...');
@@ -31,7 +30,7 @@ export const useGoalBoard = ({ variant }: UseGoalBoardProps) => {
     };
 
     fetchGoals();
-  }, []);
+  }, [variant]);
 
   const navigateToIndex = () => {
     router.push('/');

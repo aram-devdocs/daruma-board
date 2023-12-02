@@ -82,14 +82,11 @@ export const NewGoalForm = () => {
     });
     const data = await response.json();
 
-    console.log(data);
-
     if (data.error) {
       alert('Error sending goal');
       setLoading(false);
       return;
     }
-    // TODO - Remove local storage
 
     setLoading(false);
 

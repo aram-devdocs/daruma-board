@@ -5,9 +5,8 @@ import {
   ArrowBack,
 } from '@daruma-board/web/design-system';
 import { GoalBoardCard } from './GoalBoardCard';
-import { useState, useEffect, Fragment } from 'react';
+import { Fragment } from 'react';
 import { Daruma } from '../types';
-import { useRouter } from 'next/router';
 import { useGoalBoard } from '../hooks';
 
 export interface BoardCardProps {
