@@ -22,7 +22,8 @@
       "@daruma/web/feature-board": ["libs/web/feature-board/src/index.ts"],
       "@daruma/web/feature-dashboard": [
         "libs/web/feature-dashboard/src/index.ts"
-      ]
+      ],
+      "@daruma/web/feature-goal": ["libs/web/feature-goal/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
