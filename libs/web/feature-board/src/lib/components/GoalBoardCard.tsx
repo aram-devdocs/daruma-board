@@ -10,7 +10,6 @@ export const GoalBoardCard = ({
   description,
   privateBoard,
 }: BoardCardProps) => {
-  console.log(user_id);
   return (
     <Box
       sx={{
