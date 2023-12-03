@@ -1,6 +1,8 @@
 import { getEmailApi } from '../utility/getEmailApi';
 import { Resend } from 'resend';
 
+const OVERRIDE_EMAIL_BYPASS = false; // THIS IS FOR TESTING ONLY, DO NOT COMMIT WITH THIS SET TO TRUE, ONLY SET TO TRUE LOCALLY FOR TESTING EMAILS
+
 // TODO - Modularize Components into shared library
 // Email Templates
 
@@ -63,7 +65,8 @@ export const sendIndividualEmail = async ({
   template,
   subject,
 }: EmailDetails) => {
-  const __DEV__ = process.env.NODE_ENV === 'development';
+  const __DEV__ =
+    process.env.NODE_ENV === 'development' || OVERRIDE_EMAIL_BYPASS;
 
   const apiKey = getEmailApi(email);
 
