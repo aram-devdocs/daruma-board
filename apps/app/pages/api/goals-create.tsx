@@ -60,6 +60,11 @@ export const SendGoal = async (req: NextApiRequest, res: NextApiResponse) => {
       subject: 'New Goal Created',
     });
 
+    if (!data.data) {
+      res.status(403).json({ error: 'Something went wrong' });
+      return;
+    }
+
     res.status(200).json(data);
   } catch (error) {
     res.status(400).json({ error: error.message });

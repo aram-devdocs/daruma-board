@@ -9,8 +9,6 @@ export default async function sendAuthCode(req, res) {
   }
 
   try {
-    console.log('start');
-    console.log(req.body);
     const { email: rawEmail } = JSON.parse(req.body);
     const email = rawEmail.toLowerCase();
 
@@ -21,7 +19,6 @@ export default async function sendAuthCode(req, res) {
     }
 
     const user = await sql`SELECT * FROM "user" WHERE "email" = ${email}`;
-    console.log('user', user);
 
     const userId = user.rowCount ? user.rows[0].user_id : null;
 
@@ -39,7 +36,6 @@ export default async function sendAuthCode(req, res) {
     });
 
     if (!data.data) {
-      console.log('no data');
       res.status(403).json({ error: 'Something went wrong' });
       return;
     }

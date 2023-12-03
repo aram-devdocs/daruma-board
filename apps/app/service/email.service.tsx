@@ -63,7 +63,22 @@ export const sendIndividualEmail = async ({
   template,
   subject,
 }: EmailDetails) => {
-  const resend = new Resend(getEmailApi(email));
+  const __DEV__ = process.env.NODE_ENV === 'development';
+
+  const apiKey = getEmailApi(email);
+
+  if (!apiKey) {
+    return { error: 'No API key found for email' };
+  }
+  const resend = new Resend(apiKey);
+
+  if (__DEV__) {
+    console.log(`*** DEV MODE ***`);
+    console.log('Sending email to:', email);
+    console.log('Subject:', subject);
+    console.log('Substitutions:', substitutions);
+    return { data: 'success: email not sent in dev mode' };
+  }
 
   const data = await resend.emails.send({
     from: 'DarumaBoard <onboarding@resend.dev>', // TODO - Validate domain and have this be called from db || env
