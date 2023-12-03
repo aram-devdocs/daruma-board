@@ -1,8 +1,5 @@
 import { sql } from '@vercel/postgres';
-import { getEmailApi } from '../../utility';
-
-import { Resend } from 'resend';
-// TODO: Move to service
+import { sendIndividualEmail, AuthTokenTemplate } from '../../service';
 
 export default async function sendAuthCode(req, res) {
   // if not post, return 405
@@ -32,27 +29,14 @@ export default async function sendAuthCode(req, res) {
     const token = Math.floor(100000 + Math.random() * 900000);
     const expiresInFiveMinutes = new Date(Date.now() + 5 * 60 * 1000);
 
-    const tokenResponse =
-      await sql`INSERT INTO auth_token (token, email, user_id, expiration) VALUES (${token}, ${email}, ${userId}, ${expiresInFiveMinutes.toISOString()})`;
+    await sql`INSERT INTO auth_token (token, email, user_id, expiration) VALUES (${token}, ${email}, ${userId}, ${expiresInFiveMinutes.toISOString()})`;
 
-    // send email
-
-    const resend = new Resend(getEmailApi(email));
-
-    const data = await resend.emails.send({
-      from: 'DarumaBoard <onboarding@resend.dev>',
-      to: [email],
-      subject: 'Login Code',
-      react: (
-        <div>
-          <h1>Here is your login code!</h1>
-          <p>{token}</p>
-          <p>This code will expire in 5 minutes.</p>
-        </div>
-      ),
+    const data = await sendIndividualEmail({
+      email,
+      substitutions: { token },
+      template: AuthTokenTemplate,
+      subject: 'Your Login Code',
     });
-
-    console.log('data', data);
 
     if (!data.data) {
       console.log('no data');
