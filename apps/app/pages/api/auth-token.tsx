@@ -45,7 +45,7 @@ export default async function validateAuthToken(req, res) {
 
     // TODO: Return JWT to set client side authentication
     const secret = process.env.JWT_SECRET;
-    const jwtToken = jwt.sign({ email }, secret, { expiresIn: '1h' });
+    const jwtToken = jwt.sign({ email }, secret, { expiresIn: '6h' });
     res.setHeader('Set-Cookie', `token=${jwtToken}; path=/; httpOnly`);
     console.log('jwt', jwtToken);
 
