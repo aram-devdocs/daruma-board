@@ -1,5 +1,6 @@
-import { BoardCardProps } from './GoalBoard';
+import { BoardCardProps } from './GoalBoard'; // TODO - Get from data access layer
 import { Box, Typography } from '@daruma-board/web/design-system';
+import { useRouter } from 'next/router';
 
 export const GoalBoardCard = ({
   daruma,
@@ -9,9 +10,16 @@ export const GoalBoardCard = ({
   user_id,
   description,
   privateBoard,
+  goal_id,
 }: BoardCardProps) => {
+  const router = useRouter();
+
+  const navigateToDetails = () => {
+    router.push(`/goal/${goal_id}`);
+  };
   return (
     <Box
+      onClick={navigateToDetails}
       sx={{
         backgroundColor: daruma,
         border: '1px solid black',
