@@ -9,14 +9,17 @@ import { Fragment } from 'react';
 import { Daruma } from '../types';
 import { useGoalBoard } from '../hooks';
 
+
+// TODO - Move to shared types
 export interface BoardCardProps {
   user_id: string;
   goal: string;
   notes?: string;
   due_date: string;
-  daruma?: Daruma['color'];
-  description?: Daruma['description'];
+  daruma: Daruma['color'];
+  description: Daruma['description'];
   privateBoard?: boolean;
+  goal_id: string;
 }
 
 export interface GoalBoardProps {
