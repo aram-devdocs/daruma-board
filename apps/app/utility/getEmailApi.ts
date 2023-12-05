@@ -9,6 +9,8 @@ export const getEmailApi = (email: string) => {
   const emails = RESEND_DEV_KEYS.map((item) => item[0]);
   if (emails.includes(email)) {
     return RESEND_DEV_KEYS[emails.indexOf(email)][1];
+  } else {
+    return null; // TODO - Remove else case when sender email is validated and api key is added to env that can support outside dev mode
   }
-  return process.env.RESEND_API_KEY;
+  return process.env.RESEND_API_KEY; // TODO - Remove when sender email is validated and api key is added to env that can support outside dev mode
 };
