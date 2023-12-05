@@ -1,5 +1,3 @@
-// check to see if there's a logged in user
-
 import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
 
@@ -9,7 +7,6 @@ export const me = async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(400).json({ error: 'Only POST requests allowed' });
     return;
   }
-
 
   const { token } = JSON.parse(req.body);
   if (!token) {
@@ -26,8 +23,21 @@ export const me = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  console.log(decoded);
-  res.status(200).json({ success: true });
+  // If token is valid for more than an hour, return it
+
+  const now = Math.floor(Date.now() / 1000);
+  if (decoded.exp - now > 3600) {
+    res.status(200).json({ success: true, token });
+    return;
+  }
+
+  // If token is valid for less than an hour, return a new one
+  const newToken = jwt.sign({ email: decoded.email }, secret, {
+    expiresIn: '6h',
+  });
+  res.setHeader('Set-Cookie', `token=${newToken}; path=/; httpOnly`);
+
+  res.status(200).json({ success: true, token: newToken });
   return;
 };
 
