@@ -44,7 +44,7 @@ export default async function validateAuthToken(req, res) {
     }
 
     const secret = process.env.JWT_SECRET;
-    const jwtToken = jwt.sign({ email }, secret, { expiresIn: '1h' });
+    const jwtToken = jwt.sign({ email }, secret, { expiresIn: '6h' });
     res.setHeader('Set-Cookie', `token=${jwtToken}; path=/; httpOnly`);
 
     res.status(200).json({ message: 'ok', token: jwtToken });
