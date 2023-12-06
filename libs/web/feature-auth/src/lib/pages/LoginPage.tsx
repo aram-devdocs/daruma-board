@@ -2,6 +2,8 @@ import { PageLayout, validateEmail } from '@daruma-board/web/design-system';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { LoginBox } from '../components';
+
+
 export const LoginPage = () => {
   // TODO: move to hook
   const [email, setEmail] = useState<string>('');
