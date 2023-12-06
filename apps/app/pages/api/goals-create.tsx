@@ -1,38 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Resend } from 'resend';
 import { sql } from '@vercel/postgres';
 import { v4 as uuidv4 } from 'uuid';
-import { getEmailApi } from '../../utility';
-
-import * as React from 'react';
-
-interface EmailTemplateProps {
-  email: string;
-  goal: string;
-  notes?: string;
-  dueDate: Date;
-  darumaDescription: string;
-}
-
-export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
-  email,
-  goal,
-  notes,
-  dueDate,
-  darumaDescription,
-}) => (
-  <div>
-    <h5>Welcome, {email}!</h5>
-    <p>You have just created a new goal!</p>
-    <p>Here are the details:</p>
-    <p>Description: {goal}</p>
-    <p>Notes: {notes}</p>
-    <p>Due Date: {new Date(dueDate).toDateString()}</p>
-    <p>Daruma: {darumaDescription}</p>
-
-    <p>Good luck!</p>
-  </div>
-);
+import { sendIndividualEmail, NewGoalTemplate } from '../../service';
 
 export const SendGoal = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -50,8 +19,6 @@ export const SendGoal = async (req: NextApiRequest, res: NextApiResponse) => {
     const darumaDescription = body.daruma;
     const darumaColor = body.color;
     const isPublic = body?.isPublic || true;
-
-    const resend = new Resend(getEmailApi(email));
 
     // if any of the required fields are missing, return 400
     if (!email || !goal || !dueDate || !darumaDescription) {
@@ -74,19 +41,29 @@ export const SendGoal = async (req: NextApiRequest, res: NextApiResponse) => {
     const goalResponse =
       await sql`INSERT INTO goal (goal_id, user_id, created_at, due_date, description, notes, is_public, daruma) VALUES (${goalUUID}, ${userId}, ${new Date().toISOString()}, ${dueDate}, ${goal}, ${notes}, ${isPublic}, ${darumaColor}) RETURNING *`;
 
-    // send email
-
     if (!goalResponse.rowCount) {
       res.status(400).json({ error: 'Error creating goal' });
       return;
     }
 
-    const data = await resend.emails.send({
-      from: 'DarumaBoard <onboarding@resend.dev>',
-      to: [email],
-      subject: 'New Goal Created!',
-      react: EmailTemplate({ email, goal, notes, dueDate, darumaDescription }),
+    // send email
+    const data = await sendIndividualEmail({
+      email,
+      substitutions: {
+        email,
+        goal,
+        notes,
+        dueDate,
+        darumaDescription,
+      },
+      template: NewGoalTemplate,
+      subject: 'New Goal Created',
     });
+
+    if (!data.data) {
+      res.status(403).json({ error: 'Something went wrong' });
+      return;
+    }
 
     res.status(200).json(data);
   } catch (error) {
