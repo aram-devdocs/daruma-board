@@ -40,10 +40,13 @@ const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
         method: 'POST',
         body: JSON.stringify({ token }),
       })
-        .then((res) => {
+        .then(async (res) => {
           console.log(res);
+          const body = await res.json();
+
           if (res.status === 200) {
             setLoading(false);
+            localStorage.setItem('token', body.token);
           } else {
             router.push('/login');
             setLoading(false);
