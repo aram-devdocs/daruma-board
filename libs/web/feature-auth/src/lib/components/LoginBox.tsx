@@ -13,7 +13,7 @@ interface LoginBoxProps {
   code: string;
   setCode: (code: string) => void;
   handleLogin: (email: string) => void;
-  validateToken: (code: string, email: string) => void;
+  validateToken: (code: string, email: string) => Promise<void>;
   loading: boolean;
 }
 
@@ -59,7 +59,6 @@ export const LoginBox = ({
           onChange={(e) => setCode(e.target.value)}
         />
       )}
-
       <Button
         sx={{ width: '100%', marginTop: '1rem' }}
         variant="contained"
