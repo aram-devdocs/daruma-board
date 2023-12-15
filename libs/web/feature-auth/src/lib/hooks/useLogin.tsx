@@ -3,11 +3,11 @@ import { useRouter } from 'next/router';
 import { validateEmail } from '@daruma-board/web/design-system';
 
 export const useLogin = () => {
-  const [email, setEmail] = useState<string>('');
-  const [auth, setAuth] = useState<boolean>(false); // [auth, setAuth
-  const [loading, setLoading] = useState<boolean>(false); // [loading, setLoading
-  const [code, setCode] = useState('');
   const router = useRouter();
+  const [email, setEmail] = useState<string>('');
+  const [auth, setAuth] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [code, setCode] = useState('');
 
   const handleLogin = async (email: string) => {
     setLoading(true);
@@ -45,6 +45,14 @@ export const useLogin = () => {
     setLoading(false);
   };
 
+  const handleSetEmail = (email: string) => {
+    setEmail(email);
+  };
+
+  const handleSetCode = (code: string) => {
+    setCode(code);
+  };
+
   const validateToken = async (code: string, email: string) => {
     setLoading(true);
     await fetch('/api/auth-token', {
@@ -70,12 +78,12 @@ export const useLogin = () => {
 
   return {
     email,
-    setEmail,
+    handleSetEmail,
     auth,
     loading,
     handleLogin,
     code,
-    setCode,
+    handleSetCode,
     validateToken,
   };
 };

@@ -5,10 +5,10 @@ import { useLogin } from '../hooks';
 export const LoginPage = () => {
   const {
     email,
-    setEmail,
+    handleSetEmail,
     auth,
     code,
-    setCode,
+    handleSetCode,
     handleLogin,
     validateToken,
     loading,
@@ -18,10 +18,10 @@ export const LoginPage = () => {
     <PageLayout>
       <LoginBox
         email={email}
-        setEmail={setEmail}
+        setEmail={handleSetEmail}
         auth={auth}
         code={code}
-        setCode={setCode}
+        setCode={handleSetCode}
         handleLogin={handleLogin}
         validateToken={validateToken}
         loading={loading}
