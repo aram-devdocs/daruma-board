@@ -96,8 +96,8 @@ export const NewGoalForm = () => {
   return (
     <Box
       sx={{
-        backgroundColor: 'color.white', // TODO - replace with theme
-        color: 'color',
+        backgroundColor: 'white', 
+        color: 'primary.contrastText',
         height: '70vh',
         width: '90vw',
 
