@@ -1,12 +1,18 @@
-import { PageLayout} from '@daruma-board/web/design-system';
+import { PageLayout } from '@daruma-board/web/design-system';
 import { LoginBox } from '../components';
-import { useLogin } from '../hooks/useLogin';
-
+import { useLogin } from '../hooks';
 
 export const LoginPage = () => {
-  const { email, setEmail, auth, code, setCode, handleLogin, validateToken, loading } = useLogin();
-
-
+  const {
+    email,
+    setEmail,
+    auth,
+    code,
+    setCode,
+    handleLogin,
+    validateToken,
+    loading,
+  } = useLogin();
 
   return (
     <PageLayout>
